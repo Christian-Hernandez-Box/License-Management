@@ -19,7 +19,7 @@ $applications = [
         'customerId' => getVaultValue('microsoft', 'domain'),
         'apiClass' => 'MicrosoftInstance',
         'licenseCap' => 5000 // Example value
-    ]
+    ],
     'zoom' => [
         'productId' => 'Zoom-Video',
         'skuId' => 'Zoom-Video-Webinar',

@@ -172,3 +172,4 @@
 		// Return the list of users
 		return $users;
 	}
+	
