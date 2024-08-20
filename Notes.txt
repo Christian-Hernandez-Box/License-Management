@@ -1,0 +1,50 @@
+getVaultValue:
+Purpose: Retrieves a value from a vault, specifically the 'domain' value for 'google'. This is used to get the customerId.
+
+ScriptOps::parseArgs:
+Purpose: Parses command-line arguments passed to the script. This method is used to populate the $_GET array with the arguments.
+
+ScriptOps::getDBDateTime:
+Purpose: Gets the current date and time in a format suitable for database storage. This is used to timestamp operations.
+
+GoogleInstance::connect:
+Purpose: Establishes a connection to the Google API. This is necessary to interact with Google's services.
+
+GoogleInstance::licensing:
+Purpose: Retrieves the licensing service of the Google API. This is used to manage Google Workspace licenses.
+
+GoogleInstance::directory:
+Purpose: Retrieves the directory service of the Google API. This is used to manage Google Workspace users.
+
+monitorTotalLicenses:
+Purpose: Monitors the total number of Google Workspace licenses used. If the number of remaining licenses is low, it sends a notification to a Slack channel.
+
+monitorArchivedUsers:
+Purpose: Monitors the number of archived users. If the number exceeds a specified cap, it converts some archived users to suspended status to free up licenses.
+
+getGoogleLicenses:
+Purpose: Retrieves the total number of Google Workspace licenses assigned to users. This is used to monitor license usage.
+
+searchUsers:
+Purpose: Searches for users in the Google Workspace directory based on a query. This is used to find users that match certain criteria, such as being archived.
+
+SlackMsgInstance::sendLogToChannel:
+Purpose: Sends a log message to a specified Slack channel. This is used to notify the team about important events, such as low license availability.
+
+Google_Service_Licensing_LicenseAssignmentInsert::setUserId:
+Purpose: Sets the user ID for a license assignment. This is used when adding a new license to a user.
+
+Google_Service_Licensing_LicenseAssignments::delete:
+Purpose: Deletes a license assignment for a user. This is used to remove a license from a user.
+
+Google_Service_Licensing_LicenseAssignments::insert:
+Purpose: Inserts a new license assignment for a user. This is used to add a license to a user.
+
+Google_Service_Licensing_LicenseAssignments::listForProduct:
+Purpose: Lists all license assignments for a specific product. This is used to get the total number of licenses assigned.
+
+Google_Service_Directory_Users::patch:
+Purpose: Updates a user's information. This is used to change the status of a user, such as converting them from archived to suspended.
+
+Google_Service_Directory_Users::listUsers:
+Purpose: Lists users in the Google Workspace directory based on specified options. This is used to retrieve users that match certain criteria.
