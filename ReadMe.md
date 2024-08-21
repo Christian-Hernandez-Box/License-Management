@@ -13,31 +13,19 @@ The primary script, `NewLicenseCountMonitor.php`, has been refactored to support
 - `TimGoogleLicenseCount.php`: The original script for monitoring Google licenses.
 - `ReadMe.md`: This documentation file.
 
-## Configuration
+## Project Structure
 
-The configuration for each application is defined within the `NewLicenseCountMonitor.php` script. Here is an example configuration:
+The project is organized into several files and directories to manage different aspects of license monitoring. Below is an example of the project structure:
 
-```php
-$applications = [
-    'google' => [
-        'productId' => 'Google-Apps',
-        'skuId' => 'Google-Apps-For-Business',
-        'customerId' => getVaultValue('google', 'domain'),
-        'apiClass' => 'GoogleInstance',
-        'licenseCap' => 3481,
-    ],
-    'microsoft' => [
-        'productId' => 'Microsoft-Office',
-        'skuId' => 'Microsoft-Office-365',
-        'customerId' => getVaultValue('microsoft', 'domain'),
-        'apiClass' => 'MicrosoftInstance',
-        'licenseCap' => 5000
-    ],
-    'zoom' => [
-        'productId' => 'Zoom-Video',
-        'skuId' => 'Zoom-Video-Webinar',
-        'customerId' => getVaultValue('zoom', 'domain'),
-        'apiClass' => 'ZoomInstance',
-        'licenseCap' => 1000
-    ]
-];
+```txt
+License-Management/
+├── ReadMe.md
+├── Notes.txt
+├── TimGoogleLicenseCount.php
+├── IdealLicenseCountStructure.php
+├── RefactoredLicenseMonitor/
+    ├── NewLicenseCountMonitor.php
+    ├── GoogleApi.php
+    ├── MicrosoftApi.php
+    ├── ZoomApi.php
+```
