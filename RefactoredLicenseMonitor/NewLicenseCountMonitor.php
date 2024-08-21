@@ -6,9 +6,37 @@ require_once 'GoogleApi.php';
 require_once 'MicrosoftApi.php';
 require_once 'ZoomApi.php';
 
+// Applications Configuration
+$applications = [
+    'zoom' => [
+        'apiClass' => 'ZoomApi',
+        'productId' => 'Zoom-Video',
+        'skuId' => 'Zoom-Video-Webinar',
+        'customerId' => getVaultValue('zoom', 'domain'),
+        'apiEndpoint' => 'https://api.example.com/zoom/licenses',
+        'licenseCap' => 500,
+    ],
+    'google' => [
+        'apiClass' => 'GoogleApi',
+        'productId' => 'google-Apps',
+        'skuId' => 'Google-Apps-For-Business',
+        'customerId' => getVaultValue('google', 'domain'),
+        'apiEndpoint' => 'https://api.example.com/google/licenses',
+        'licenseCap' => 500,
+    ],
+    'microsoft-office' => [
+        'apiClass' => 'MicrosoftApi',
+        'productId' => 'Microsoft-Office',
+        'skuId' => 'Microsoft-Office-365',
+        'customerId' => getVaultValue('microsoft', 'domain'),
+        'apiEndpoint' => 'https://api.example.com/office/licenses',
+        'licenseCap' => 500,
+    ]
+];
+
 // Functions
-function createApiInstance($className) {
-    $apiInstance = new $className();
+function createApiInstance($className, $config) {
+    $apiInstance = new $className($config);
     $apiInstance->connect();
     return $apiInstance;
 }
@@ -16,16 +44,12 @@ function createApiInstance($className) {
 function fetchLicenseCount($apiInstance) {
     return $apiInstance->getLicenseCount();
 }
-function notifySlackChannel($slackMessage, $licenseCount, $licenseCap, $date) {
+
+function checkAndNotifySlackChannel($slackMessage, $licenseCount, $licenseCap, $date) {
     $licensesRemaining = $licenseCap - $licenseCount;
 
     if ($licensesRemaining <= 25) {
-        $color = ($licensesRemaining > 0) ? 'warning' : 'danger';
-        $header = ($licensesRemaining > 0) ? "Licenses Low" : ":alert: Licenses Out :alert:";
-        $body = "We have *" . $licensesRemaining . "* licenses remaining." . PHP_EOL;
-        $body .= "Available: " . $licenseCap . " - Used: " . $licenseCount . PHP_EOL;
-        $footer = $date . " /it-tools/licensing.php";
-        $slackMessage->sendLogToChannel('accounts', $color, '', $header, $body, $footer);
+        // Notify Slack Channel 
     }
 }
 
@@ -34,28 +58,25 @@ $scriptOps = new ScriptOps();
 $_GET = $scriptOps->parseArgs($argv);
 
 if (!isset($_GET[1])) die('Argument 1 needs to be set (action)');
-if (!isset($_GET[2])) die('Argument 2 needs to be set (application)');
 
 $action = strtolower($_GET[1]);
-$app = strtolower($_GET[2]);
 
-if (!isset($applications[$app])) die('Unsupported application');
+foreach ($applications as $app => $appConfig) {
+    $app = strtolower($app);
 
-$appConfig = $applications[$app];
-$date = $scriptOps->getDBDateTime();
+    $date = $scriptOps->getDBDateTime();
 
-// Access the license cap for the specific application
-$licenseCap = $appConfig['licenseCap'];
+    // Access the license cap for the specific application
+    $licenseCap = $appConfig['licenseCap'];
 
-// Create API Instance
-$apiInstance = createApiInstance($appConfig['apiClass']);
+    // Create API Instance
+    $apiInstance = createApiInstance($appConfig['apiClass'], $appConfig);
 
-// Get the license count from the API
-$licenseCount = $apiInstance->getLicenseCount();
+    // Get the license count from the API
+    $licenseCount = fetchLicenseCount($apiInstance);
 
-// Compare the license count with the license cap
-if ($licenseCount >= $licenseCap) {
-    // Threshold met, notify Slack channel
-    $slackMessage = new SlackMsgInstance();
-    notifySlackChannel($slackMessage, $licenseCount, $licenseCap, $date);
+    // Compare the license count with the license cap
+    if ($licenseCount >= $licenseCap) {
+        // Threshold met, notify Slack channel
+    }
 }
