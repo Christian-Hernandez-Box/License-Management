@@ -1,5 +1,5 @@
 <?php
-class GoogleApi {
+class ZoomApi {
     private $productId;
     private $skuId;
     private $customerId;
