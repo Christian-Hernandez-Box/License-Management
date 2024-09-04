@@ -4,12 +4,12 @@
 require_once '/var/www/it-tools/.config.php';
 require_once 'GoogleApi.php';
 require_once 'MicrosoftApi.php';
-require_once 'ZoomApi.php';
+require_once 'ZoomLicenseService.php'; // Updated to use the new ZoomLicenseService
 
 // Applications Configuration
 $applications = [
     'zoom' => [
-        'apiClass' => 'ZoomApi',
+        'apiClass' => 'ITESC\Services\ZoomLicenseService', // Updated to use the new ZoomLicenseService
         'productId' => 'Zoom-Video',
         'skuId' => 'Zoom-Video-Webinar',
         'customerId' => getVaultValue('zoom', 'domain'),

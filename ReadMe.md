@@ -10,8 +10,9 @@ The primary script, `NewLicenseCountMonitor.php`, has been refactored to support
 
 - `NewLicenseCountMonitor.php`: The main script to monitor license counts for various applications.
 - `IdealLicenseCountStructure.php`: Contains the ideal structure and configuration for license monitoring.
-- `TimGoogleLicenseCount.php`: The original script for monitoring Google licenses.
-- `ReadMe.md`: This documentation file.
+- `ZoomLicenseService.php`: The updated service class for managing Zoom licenses.
+- `GoogleService.php`: The service class for managing Google licenses.
+- `MicrosoftApi.php`: The service class for managing Microsoft licenses.
 
 ## Project Structure
 
@@ -20,12 +21,13 @@ The project is organized into several files and directories to manage different 
 ```txt
 License-Management/
 ├── ReadMe.md
-├── Notes.txt
-├── TimGoogleLicenseCount.php
 ├── IdealLicenseCountStructure.php
 ├── RefactoredLicenseMonitor/
-    ├── NewLicenseCountMonitor.php
-    ├── GoogleApi.php
-    ├── MicrosoftApi.php
-    ├── ZoomApi.php
+    ├── LicenseCountMonitor.php
+    ├── ZoomService.php
+    ├── GoogleService.php
+    ├── MicrosoftService.php
+├── TimExistingCodeFiles/
+    ├── TimExistingGoogleScript.php
+    ├── TimExistingZoomScript.php
 ```
