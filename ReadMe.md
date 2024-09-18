@@ -26,6 +26,7 @@ License-Management/
 │   ├── ZoomApi.php
 │   ├── GoogleApi.php
 ├── TimExistingCodeFiles/
+<<<<<<< HEAD
 │   ├── TimExistingGoogleScript.php
 │   ├── TimExistingZoomScript.php
 ```
@@ -43,3 +44,8 @@ License-Management/
    ```sh
    git clone https://github.com/yourusername/license-management.git
    cd license-management
+=======
+    ├── TimExistingGoogleScript.php
+    ├── TimExistingZoomScript.php
+```
+>>>>>>> origin/HEAD
