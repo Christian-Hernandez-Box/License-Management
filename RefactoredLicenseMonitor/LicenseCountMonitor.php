@@ -3,13 +3,12 @@
 // Config
 require_once '/var/www/it-tools/.config.php';
 require_once 'GoogleApi.php';
-require_once 'MicrosoftApi.php';
-require_once 'ZoomLicenseService.php'; // Updated to use the new ZoomLicenseService
+require_once 'ZoomApi.php'; // Updated to use the new ZoomApi
 
 // Applications Configuration
 $applications = [
     'zoom' => [
-        'apiClass' => 'ITESC\Services\ZoomLicenseService', // Updated to use the new ZoomLicenseService
+        'apiClass' => 'ZoomApi', // Updated to use the new ZoomApi
         'productId' => 'Zoom-Video',
         'skuId' => 'Zoom-Video-Webinar',
         'customerId' => getVaultValue('zoom', 'domain'),
@@ -22,14 +21,6 @@ $applications = [
         'skuId' => 'Google-Apps-For-Business',
         'customerId' => getVaultValue('google', 'domain'),
         'apiEndpoint' => 'https://api.example.com/google/licenses',
-        'licenseCap' => 500,
-    ],
-    'microsoft-office' => [
-        'apiClass' => 'MicrosoftApi',
-        'productId' => 'Microsoft-Office',
-        'skuId' => 'Microsoft-Office-365',
-        'customerId' => getVaultValue('microsoft', 'domain'),
-        'apiEndpoint' => 'https://api.example.com/office/licenses',
         'licenseCap' => 500,
     ]
 ];
@@ -78,5 +69,7 @@ foreach ($applications as $app => $appConfig) {
     // Compare the license count with the license cap
     if ($licenseCount >= $licenseCap) {
         // Threshold met, notify Slack channel
+        $slackMessage = "License count for {$app} has reached the cap of {$licenseCap}. Current count: {$licenseCount}.";
+        checkAndNotifySlackChannel($slackMessage, $licenseCount, $licenseCap, $date);
     }
 }
