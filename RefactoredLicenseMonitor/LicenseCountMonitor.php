@@ -45,12 +45,7 @@ function checkAndNotifySlackChannel($slackMessage, $licenseCount, $licenseCap, $
 }
 
 // Main Script
-$scriptOps = new ScriptOps();
-$_GET = $scriptOps->parseArgs($argv);
-
-if (!isset($_GET[1])) die('Argument 1 needs to be set (action)');
-
-$action = strtolower($_GET[1]);
+$scriptOps = new ScriptOps(); //add config file path
 
 foreach ($applications as $app => $appConfig) {
     $app = strtolower($app);
