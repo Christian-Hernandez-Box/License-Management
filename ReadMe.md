@@ -4,11 +4,11 @@ This repository contains scripts to monitor and manage software licenses for var
 
 ## Overview
 
-The primary script, `NewLicenseCountMonitor.php`, has been refactored to support multiple applications dynamically. This script helps in monitoring the license usage and sends alerts when the license cap is reached.
+The primary script, `LicenseCountMonitor.php`, has been refactored to support multiple applications dynamically. This script helps in monitoring the license usage and sends alerts when the license cap is reached.
 
 ## Files
 
-- `NewLicenseCountMonitor.php`: The main script to monitor license counts for various applications.
+- `LicenseCountMonitor.php`: The main script to monitor license counts for various applications.
 - `IdealLicenseCountStructure.php`: Contains the ideal structure and configuration for license monitoring.
 - `ZoomLicenseService.php`: The updated service class for managing Zoom licenses.
 - `GoogleService.php`: The service class for managing Google licenses.
