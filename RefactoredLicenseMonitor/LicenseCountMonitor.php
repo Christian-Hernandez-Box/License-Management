@@ -1,6 +1,6 @@
 <?php
 
-// Config
+// Load configuration and required classes
 require_once '/var/www/it-tools/.config.php';
 require_once 'GoogleApi.php';
 require_once 'ZoomApi.php'; // Updated to use the new ZoomApi
@@ -9,11 +9,9 @@ require_once 'ZoomApi.php'; // Updated to use the new ZoomApi
 $applications = [
     'zoom' => [
         'apiClass' => 'ZoomApi', // Updated to use the new ZoomApi
-        'productId' => 'Zoom-Video',
-        'skuId' => 'Zoom-Video-Webinar',
-        'customerId' => getVaultValue('zoom', 'domain'),
-        'apiEndpoint' => 'https://api.example.com/zoom/licenses',
-        'licenseCap' => 500,
+        'customerId' => getVaultValue('zoom', 'domain'), // Not needed for Zoom API
+        'apiEndpoint' => 'https://api.example.com/zoom/licenses', // Not needed for Zoom API
+        'licenseCap' => 2990, // Updated as of 9/17/2024
     ],
     'google' => [
         'apiClass' => 'GoogleApi',
@@ -25,31 +23,34 @@ $applications = [
     ]
 ];
 
-// Functions
+// Function to create an API instance and establish a connection
 function createApiInstance($className, $config) {
     $apiInstance = new $className($config);
     $apiInstance->connect();
     return $apiInstance;
 }
 
+// Function to fetch the license count from the API
 function fetchLicenseCount($apiInstance) {
     return $apiInstance->getLicenseCount();
 }
 
+// Function to check the license count and notify the Slack channel if needed
 function checkAndNotifySlackChannel($slackMessage, $licenseCount, $licenseCap, $date) {
     $licensesRemaining = $licenseCap - $licenseCount;
 
     if ($licensesRemaining <= 25) {
-        // Notify Slack Channel 
+        // Notify Slack Channel. I believe this function is defined elsewhere in the codebase.
     }
 }
 
 // Main Script
-$scriptOps = new ScriptOps(); //add config file path
+$scriptOps = new ScriptOps(); // Add config file path
 
 foreach ($applications as $app => $appConfig) {
     $app = strtolower($app);
 
+    // Get the current date and time from the database
     $date = $scriptOps->getDBDateTime();
 
     // Access the license cap for the specific application
