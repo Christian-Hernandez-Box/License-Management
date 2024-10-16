@@ -78,17 +78,18 @@
 
 			if(($licenseCap - $gappsCount) > 0) {
 				$color = 'warning';
-				$header = "G Suite Licenses Low";
+				$header = ":warning: Google Workplace License Count is Low :warning:";
 			} else {
 				$color = 'danger';
-				$header = ":alert: G Suite Licenses Out :alert:";
+				$header = ":alert: No Google Workspace Licenses Available :alert:";
 			}
 
-			$body = "We have *" . $licensesRemaining . "* Google Workspace licenses remaining." . PHP_EOL;
-			$body .= "Available: " . $licenseCap . " - Used: " . $gappsCount . PHP_EOL;
+			$body = "Only *" . $licensesRemaining . "* Google Workspace Licenses Left." . PHP_EOL;
+			$body .= "Available: " . $licenseCap . " | In Use: " . $gappsCount . PHP_EOL;
 
 			$footer = $date . " LV7-IT-PRODTOOLS1 /it-tools/google/licensing.php";
 			$sm->sendLogToChannel('accounts', $color, '', $header, $body, $footer);
+			$sm->sendLogToChannel('eus-licensing', $color, '', $header, $body, $footer);
 		}
 	}
 
